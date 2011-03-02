@@ -47,9 +47,14 @@ before_filter :admin_user,   :only => :destroy
   end
 
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User destroyed."
-    redirect_to users_path
+    if current_user?(User.find(params[:id]))
+      flash[:error] = "Cannot delete yourself."
+      redirect_to users_path
+    else
+      User.find(params[:id]).destroy
+      flash[:success] = "User destroyed."
+      redirect_to users_path
+    end
   end
   private
     def authenticate
