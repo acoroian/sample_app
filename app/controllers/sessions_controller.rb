@@ -1,4 +1,6 @@
+
 class SessionsController < ApplicationController
+#  ssl_required :create, :new
   def new
     @title = "Sign in"
   end
@@ -12,7 +14,7 @@ class SessionsController < ApplicationController
       render 'new'
     else
       sign_in user
-      redirect_to user
+      redirect_back_or user
     end
   end
   def destroy
